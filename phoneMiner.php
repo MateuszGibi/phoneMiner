@@ -122,7 +122,7 @@
             }
 
             $finalInfoArr = array(
-                "gprs" => $commuInfo[0],
+                "gprs" => $commuInfo[0], 
                 "hsupa" => $commuInfo[1],
                 "wifi_stand" => $commuInfo[2],
                 "bluetooth" => $commuInfo[3],
@@ -241,57 +241,63 @@
 
             $finalInfoArr = array();
 
-            for($i = 1 ; $i < 20 ; $i++){
+            for($i = 1 ; $i < 2 ; $i++){
                 $techName = $this -> getSpecDOM($phoneLink, 7) -> children($i) -> children(0) -> plaintext;
                 $techValue = $this -> getSpecDOM($phoneLink, 7) -> children($i) -> children(1) -> plaintext;
-                echo $techName . "<br>";
+                
+                //$techName = str_replace(" ","",$techName);
+
+                for($i = 0 ; $i < 16 ; $i++){
+                    echo $techName[$i] . "<br>";
+                }
+                
                 switch($techName){
                     case "Pamięć RAM":
                         $finalInfoArr["ram"] = $techValue;
                         break;
-                    case "Liczba rdzeni procesora":
+                    case " Liczba rdzeni procesora ":
                         $finalInfoArr["cpu_core_number"] = $techValue;
                         break;
                     case "Maksymalna pojemność karty pamięci [GB] ":
                         $finalInfoArr["max_sd_memory"] = $techValue;
                         break;
-                    case "DLNA ":
+                    case " DLNA ":
                         $finalInfoArr["dlna"] = $techValue;
                         break;
-                    case "ANR+ ":
+                    case " ANR+ ":
                         $finalInfoArr["anr+"] = $techValue;
                         break;
-                    case "Wodoodporność ":
+                    case " Wodoodporność ":
                         $finalInfoArr["waterproof"] = $techValue;
                         break;
                     case "Pyłoszczelność ":
                         $finalInfoArr["dustproof"] = $techValue;
                         break;
-                    case "Pamięć wbudowana [GB] ":
+                    case " Pamięć wbudowana [GB] ":
                         $finalInfoArr["buildin_memory"] = $techValue;
                         break;
-                    case "Model procesora ":
+                    case " Model procesora ":
                         $finalInfoArr["cpu_model"] = $techValue;
                         break;
-                    case "Dual SIM ":
+                    case " Dual SIM ":
                         $finalInfoArr["dual_sim"] = $techValue;
                         break;
                     case "Częstotliwość taktowania procesora [GHz] ":
                         $finalInfoArr["cpu_clock"] = $techValue;
                         break;
-                    case "Wyjście słuchawkowe ":
+                    case " Wyjście słuchawkowe ":
                         $finalInfoArr["hp_input"] = $techValue;
                         break;
-                    case "Standard karty SIM ":
+                    case " Standard karty SIM ":
                         $finalInfoArr["sim_standart"] = $techValue;
                         break;
-                    case "NFC ":
+                    case " NFC ":
                         $finalInfoArr["nfc"] = $techValue;
                         break;
-                    case "Typ złącza USB ":
+                    case " Typ złącza USB ":
                         $finalInfoArr["usb_type"] = $techValue;
                         break;
-                    case "Czytnik kart pamięci ":
+                    case " Czytnik kart pamięci ":
                         $finalInfoArr["sd_slot"] = $techValue;
                         break;
                 }
