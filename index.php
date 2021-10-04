@@ -4,7 +4,7 @@
     require_once("phoneMiner.php");
 
     $site = "https://www.mediaexpert.pl";
-    $prefix = "smartfony-i-zegarki/smartfony?limit=13&page=";
+    $prefix = "/smartfony-i-zegarki/smartfony?limit=13&page=";
 
     $miner = new PhoneMiner();
 
