@@ -27,7 +27,7 @@ use function PHPSTORM_META\type;
 
     //echo $test;
 
-    $camArr = $miner -> getFullParamInfo($newHtml);
+    $camArr = $miner -> getFullTechInfo($hehehtml);
 
     // $paramName = $miner -> getSpecDOM($newHtml, 5) -> children(1) -> children(0) -> plaintext;
 
