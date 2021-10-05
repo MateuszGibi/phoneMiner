@@ -18,17 +18,15 @@
         for($i = 0 ; $i < 5 ; $i++){
             
             $phoneDom = $miner -> getPhoneDOM($html, $i);
-            $phoneDir = $miner -> getHref($phoneDom);
     
-            $link = $site . $phoneDir;
+            $link = $miner -> getPhoneLink($phoneDom);
     
             $newHtml = file_get_html($link);
 
             $phoneInfo = array();
 
             $phoneInfo = $miner -> getFullInfo($newHtml);               
-            //echo "<br><br><br>";
-
+            
             array_push($jsonArr, $phoneInfo);
             unset($phoneInfo);
         }

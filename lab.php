@@ -14,8 +14,8 @@ use function PHPSTORM_META\type;
 
     $miner = new PhoneMiner();
 
-    $camArr = $miner -> getFullInfo($hehehtml);
+    $camArr = $miner -> getImages($hehehtml);
 
 
-    echo json_encode($camArr);
+    //echo json_encode($camArr);
 ?>
