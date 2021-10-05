@@ -14,9 +14,20 @@
             return $phoneHtml -> find("div[class='specification']", 0) -> children(1) -> first_child() -> children($index);
         }
 
-        public function getName($phoneDOM)
-        {   
-            return $phoneDOM -> first_child() -> children(1) -> children(1) -> first_child() -> plaintext;
+        // public function getName($phoneDOM)
+        // {   
+        //     return $phoneDOM -> first_child() -> children(1) -> children(1) -> first_child() -> plaintext;
+        // }
+
+        public function getName($phoneLink){
+            $name = $phoneLink -> find("h1[class='name is-title']" ,0) -> plaintext;
+            //$name = str_replace(" ", "", $name);
+
+            //$name = str_ireplace("&quot;", "", $name);
+
+            $name = htmlspecialchars_decode($name);
+
+            return $name;
         }
 
         public function getDisplay($phoneDOM)
@@ -202,7 +213,7 @@
             for($i = 1 ; $i < 11 ; $i++){
                 $paramName = $this -> getSpecDOM($phoneLink, 6) -> children($i) -> children(0) -> plaintext;
                 $paramValue = $this -> getSpecDOM($phoneLink, 6) -> children($i) -> children(1) -> plaintext;
-                //echo $paramName . "<br>";
+
                 switch($paramName){
                     case "Kolor obudowy ":
                         //array_push($finalInfoArr, "color", $paramValue);
@@ -237,100 +248,110 @@
 
         public function getFullTechInfo($phoneLink)
         {
-            //hehe
-
             $finalInfoArr = array();
 
-            for($i = 1 ; $i < 2 ; $i++){
-                $techName = $this -> getSpecDOM($phoneLink, 7) -> children($i) -> children(0) -> plaintext;
-                $techValue = $this -> getSpecDOM($phoneLink, 7) -> children($i) -> children(1) -> plaintext;
-                
-                //$techName = str_replace(" ","",$techName);
+            for($i = 0 ; $i < count($this -> getSpecDOM($phoneLink, 7) -> find("tr[class='attribute']")) ; $i++){
+                $techName = $this -> getSpecDOM($phoneLink, 7) -> children($i + 1) -> children(0) -> plaintext;
+                $techValue = $this -> getSpecDOM($phoneLink, 7) -> children($i + 1) -> children(1) -> plaintext;
 
-                for($i = 0 ; $i < 16 ; $i++){
-                    echo $techName[$i] . "<br>";
-                }
-                
-                switch($techName){
-                    case "Pamięć RAM":
-                        $finalInfoArr["ram"] = $techValue;
-                        break;
-                    case " Liczba rdzeni procesora ":
-                        $finalInfoArr["cpu_core_number"] = $techValue;
-                        break;
-                    case "Maksymalna pojemność karty pamięci [GB] ":
-                        $finalInfoArr["max_sd_memory"] = $techValue;
-                        break;
-                    case " DLNA ":
-                        $finalInfoArr["dlna"] = $techValue;
-                        break;
-                    case " ANR+ ":
-                        $finalInfoArr["anr+"] = $techValue;
-                        break;
-                    case " Wodoodporność ":
-                        $finalInfoArr["waterproof"] = $techValue;
-                        break;
-                    case "Pyłoszczelność ":
-                        $finalInfoArr["dustproof"] = $techValue;
-                        break;
-                    case " Pamięć wbudowana [GB] ":
-                        $finalInfoArr["buildin_memory"] = $techValue;
-                        break;
-                    case " Model procesora ":
-                        $finalInfoArr["cpu_model"] = $techValue;
-                        break;
-                    case " Dual SIM ":
-                        $finalInfoArr["dual_sim"] = $techValue;
-                        break;
-                    case "Częstotliwość taktowania procesora [GHz] ":
-                        $finalInfoArr["cpu_clock"] = $techValue;
-                        break;
-                    case " Wyjście słuchawkowe ":
-                        $finalInfoArr["hp_input"] = $techValue;
-                        break;
-                    case " Standard karty SIM ":
-                        $finalInfoArr["sim_standart"] = $techValue;
-                        break;
-                    case " NFC ":
-                        $finalInfoArr["nfc"] = $techValue;
-                        break;
-                    case " Typ złącza USB ":
-                        $finalInfoArr["usb_type"] = $techValue;
-                        break;
-                    case " Czytnik kart pamięci ":
-                        $finalInfoArr["sd_slot"] = $techValue;
-                        break;
-                }
+                $techName = str_replace(" ", "", $techName);
+                $techValue = str_replace(" ", "", $techValue);
+
+                $finalInfoArr[$techName] = $techValue;
+
+                //echo $techName . ": " . $techValue;
             }
 
             return $finalInfoArr;
-
-
+            
         }
 
         public function getFullDisplayInfo($phoneLink)
         {
-            
+            $finalInfoArr = array();
+
+            for($i = 0 ; $i < count($this -> getSpecDOM($phoneLink, 8) -> find("tr[class='attribute']")) ; $i++){
+                $infoName = $this -> getSpecDOM($phoneLink, 8) -> children($i + 1) -> children(0) -> plaintext;
+                $infoValue = $this -> getSpecDOM($phoneLink, 8) -> children($i + 1) -> children(1) -> plaintext;
+
+                $infoName = str_replace(" ", "", $infoName);
+                $infoValue = str_replace(" ", "", $infoValue);
+
+                $finalInfoArr[$infoName] = $infoValue;
+
+                //echo $infoName . ": " . $infoValue;
+            }
+
+            return $finalInfoArr;
         }
 
         public function getFullPowerSuppInfo($phoneLink)
         {
-            //hehe
+            $finalInfoArr = array();
+
+            for($i = 0 ; $i < count($this -> getSpecDOM($phoneLink, 9) -> find("tr[class='attribute']")) ; $i++){
+                $infoName = $this -> getSpecDOM($phoneLink, 9) -> children($i + 1) -> children(0) -> plaintext;
+                $infoValue = $this -> getSpecDOM($phoneLink, 9) -> children($i + 1) -> children(1) -> plaintext;
+
+                $infoName = str_replace(" ", "", $infoName);
+                $infoValue = str_replace(" ", "", $infoValue);
+
+                $finalInfoArr[$infoName] = $infoValue;
+
+                //echo $infoName . ": " . $infoValue;
+            }
+
+            return $finalInfoArr;
         }
 
         public function getFullPhysicalInfo($phoneLink)
         {
-            
+            $finalInfoArr = array();
+
+            for($i = 0 ; $i < count($this -> getSpecDOM($phoneLink, 10) -> find("tr[class='attribute']")) ; $i++){
+                $infoName = $this -> getSpecDOM($phoneLink, 10) -> children($i + 1) -> children(0) -> plaintext;
+                $infoValue = $this -> getSpecDOM($phoneLink, 10) -> children($i + 1) -> children(1) -> plaintext;
+
+                $infoName = str_replace(" ", "", $infoName);
+                $infoValue = str_replace(" ", "", $infoValue);
+
+                $finalInfoArr[$infoName] = $infoValue;
+
+                //echo $infoName . ": " . $infoValue;
+            }
+
+            return $finalInfoArr;
         }
 
-        public function getProducerName($phoneLink)
+        public function getFullInfo($phoneLink)
         {
-            
-        }
+            $finalInfoArr = array();
 
-        public function getFullInfo()
-        {
+            $finalInfoArr = array_merge($finalInfoArr, array("Nazwa" => $this -> getName($phoneLink)));
 
+            for($i = 0 ; $i < 10 ; $i++){
+
+                $infoArr = array();
+
+                for($j = 0 ; $j < count($this -> getSpecDOM($phoneLink, $i) -> find("tr[class='attribute']")) ; $j++){
+
+                    $infoName = $this -> getSpecDOM($phoneLink, $i) -> children($j + 1) -> children(0) -> plaintext;
+                    $infoValue = $this -> getSpecDOM($phoneLink, $i) -> children($j + 1) -> children(1) -> plaintext;
+    
+                    $infoName = str_replace(" ", "", $infoName);
+                    $infoValue = str_replace(" ", "", $infoValue);
+    
+                    $infoArr[$infoName] = $infoValue;
+    
+                    //echo $infoName . ": " . $infoValue;
+                }
+
+                $finalInfoArr = array_merge($finalInfoArr, $infoArr);
+                unset($infoArr);
+
+            }
+
+            return $finalInfoArr;
         }
         
         public function getHref($phoneDOM)
