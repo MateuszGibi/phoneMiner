@@ -1,7 +1,4 @@
 <?php
-
-use function PHPSTORM_META\type;
-
     require_once("lib/simple_html_dom.php");
     require_once("phoneMiner.php");
 

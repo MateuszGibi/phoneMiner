@@ -1,6 +1,6 @@
 <?php 
 
-    //MGSM.PL
+    //MediaExpert
     require_once("lib/simple_html_dom.php");
     require_once("phoneMiner.php");
     
